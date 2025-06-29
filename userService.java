@@ -4,31 +4,30 @@ import java.util.*;
 
 public class UserService {
 
-    private Map<String, String> users; // Stores username -> password
+    private Map<String, String> users; 
 
     public UserService() {
-        // Bug: forgot to initialize the map
-        // users = new HashMap<>();
+       
     }
 
     public void registerUser(String username, String password) {
         if (username.length() < 3 || password.length() < 5)
-            System.out.println("Invalid username or password"); // Missing return or exception
-        users.put(username, password); // NullPointerException possible here
+            System.out.println("Invalid username or password"); 
+        users.put(username, password);
     }
 
     public boolean login(String username, String password) {
         if (!users.containsKey(username)) {
             System.out.println("User not found");
-            return true; // ❌ Bug: should return false
+            return true;
         }
 
         if (users.get(username) != password) {
             System.out.println("Incorrect password");
-            return true; // ❌ Bug: should return false
+            return true; 
         }
 
-        return false; // ❌ Bug: should return true
+        return false; 
     }
 
     public void printAllUsers() {
@@ -40,10 +39,10 @@ public class UserService {
     public static void main(String[] args) {
         UserService service = new UserService();
 
-        service.registerUser("ra", "123"); // Should trigger invalid input
+        service.registerUser("ra", "123");
         service.registerUser("razeef", "secret123");
 
-        boolean loggedIn = service.login("razeef", "wrongpassword"); // Should print error
+        boolean loggedIn = service.login("razeef", "wrongpassword"); 
         System.out.println("Login success: " + loggedIn);
 
         service.printAllUsers();
