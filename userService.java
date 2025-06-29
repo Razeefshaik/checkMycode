@@ -4,30 +4,29 @@ import java.util.*;
 
 public class UserService {
 
-    private Map<String, String> users; 
+    private Map<String, String> users;
 
     public UserService() {
-       
+        users = new HashMap<>();
     }
 
     public void registerUser(String username, String password) {
-        if (username.length() < 3 || password.length() < 5)
-            System.out.println("Invalid username or password"); 
+        if (username.length() < 3 || password.length() < 5) {
+            throw new IllegalArgumentException("Invalid username or password");
+        }
         users.put(username, password);
     }
 
     public boolean login(String username, String password) {
         if (!users.containsKey(username)) {
-            System.out.println("User not found");
-            return true;
+            return false;
         }
 
-        if (users.get(username) != password) {
-            System.out.println("Incorrect password");
-            return true; 
+        if (!users.get(username).equals(password)) {
+            return false;
         }
 
-        return false; 
+        return true;
     }
 
     public void printAllUsers() {
@@ -42,8 +41,8 @@ public class UserService {
         service.registerUser("ra", "123");
         service.registerUser("razeef", "secret123");
 
-        boolean loggedIn = service.login("razeef", "wrongpassword"); 
-        System.out.println("Login success: " + loggedIn);
+        boolean loggedIn = service.login("razeef", "wrongpassword");
+        System.out.println("Login success: " + !loggedIn); // Inverting the boolean for easier reading
 
         service.printAllUsers();
     }
